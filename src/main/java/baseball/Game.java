@@ -18,10 +18,14 @@ public class Game {
     public void start() {
         boolean isCorrect = false;
         while (!isCorrect) {
-            List<Integer> guess = InputView.getUserInput();
-            Result result = checkGuess(guess);
-            ResultView.printResult(result);
-            isCorrect = result.isCorrect();
+            try {
+                List<Integer> guess = InputView.getUserInput();
+                Result result = checkGuess(guess);
+                ResultView.printResult(result);
+                isCorrect = result.isCorrect();
+            } catch (IllegalArgumentException e) {
+                System.out.println("입력 오류: " + e.getMessage());
+            }
         }
         System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
     }
@@ -39,23 +43,31 @@ public class Game {
     }
 
     public Result checkGuess(List<Integer> guess) {
-        if (guess.size() != 3 || guess.stream().distinct().count() != 3) {
-            throw new IllegalArgumentException("입력값은 서로 다른 3개의 숫자여야 합니다.");
-        }
-        if (!guess.stream().allMatch(n -> n >= 1 && n <= 9)) {
-            throw new IllegalArgumentException("숫자는 1에서 9 사이여야 합니다.");
-        }
+        validateInput(guess);
 
         int strike = 0;
         int ball = 0;
         for (int i = 0; i < 3; i++) {
             if (guess.get(i).equals(answer.get(i))) {
                 strike++;
-            } else if (answer.contains(guess.get(i))) {
+            }
+            if (!guess.get(i).equals(answer.get(i)) && answer.contains(guess.get(i))) {
                 ball++;
             }
         }
         return new Result(strike, ball);
+    }
+
+    private void validateInput(List<Integer> guess) {
+        if (guess.size() != 3) {
+            throw new IllegalArgumentException("숫자 3개를 정확히 입력해야 합니다.");
+        }
+        if (guess.stream().distinct().count() != 3) {
+            throw new IllegalArgumentException("각 숫자는 중복되지 않아야 합니다.");
+        }
+        if (!guess.stream().allMatch(n -> n >= 1 && n <= 9)) {
+            throw new IllegalArgumentException("모든 숫자는 1에서 9 사이여야 합니다.");
+        }
     }
 
     public List<Integer> getAnswer() {
