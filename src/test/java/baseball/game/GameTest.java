@@ -1,5 +1,6 @@
-package baseball;
+package baseball.game;
 
+import baseball.model.Result;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
@@ -29,7 +30,7 @@ public class GameTest {
         Result result = game.checkGuess(List.of(4, 2, 5));
 
         assertEquals(3, result.getStrike(), "3 스트라이크임.");
-        assertEquals(0, result.getBall(), "볼이 없음.");
+        assertEquals(0, result.getBall(), "볼 XXXXX.");
         assertTrue(result.isCorrect(), "정답을 맞췄으므로 게임이 종료.");
     }
 
