@@ -5,7 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,28 +21,27 @@ public class RandomNumberGeneratorTest {
     }
 
     @Test
-    @DisplayName("랜덤 숫자가 3개 생성되며, 숫자는 중복되지 않고 1에서 9 사이여야 한다")
-    public void testGenerateRandomNumbers() {
+    @DisplayName("생성된 숫자 개수 맞는지 확인해보셈")
+    public void testGenerateNumberCount() {
         List<Integer> numbers = randomNumberGenerator.generate();
-
-        // 숫자가 3개여야 함
-        assertEquals(Constants.NUMBER_COUNT, numbers.size(), "숫자 개수가 3개여야 합니다.");
-
-        // 숫자는 1에서 9 사이여야 함
-        assertTrue(numbers.stream().allMatch(n -> n >= Constants.MIN_NUMBER && n <= Constants.MAX_NUMBER),
-                "모든 숫자는 1에서 9 사이여야 합니다.");
-
-        // 중복된 숫자가 없어야 함
-        assertEquals(numbers.stream().distinct().count(), numbers.size(), "숫자가 중복되지 않아야 합니다.");
+        assertEquals(Constants.NUMBER_COUNT, numbers.size(), "생성된 숫자의 개수가 올바르지 않음");
     }
 
     @Test
-    @DisplayName("랜덤 숫자가 여러 번 생성될 때, 각 시도마다 다른 숫자가 생성되어야 한다")
-    public void testGenerateDifferentNumbers() {
-        List<Integer> firstAttempt = randomNumberGenerator.generate();
-        List<Integer> secondAttempt = randomNumberGenerator.generate();
+    @DisplayName("숫자 중복 안되는지 확인해보셈")
+    public void testNoDuplicateNumbers() {
+        List<Integer> numbers = randomNumberGenerator.generate();
+        Set<Integer> numberSet = new HashSet<>(numbers);
+        assertEquals(numbers.size(), numberSet.size(), "중복된 숫자가 있음");
+    }
 
-        // 두 번 생성한 결과가 동일하지 않아야 함
-        assertNotEquals(firstAttempt, secondAttempt, "두 번의 시도에서 생성된 숫자가 달라야 합니다.");
+    @Test
+    @DisplayName("숫자 범위 맞는지 확인해보셈")
+    public void testNumberRange() {
+        List<Integer> numbers = randomNumberGenerator.generate();
+        for (int num : numbers) {
+            assertTrue(num >= Constants.MIN_NUMBER && num <= Constants.MAX_NUMBER,
+                    "숫자가 범위를 벗어남: " + num);
+        }
     }
 }

@@ -1,7 +1,7 @@
 package baseball.checker;
 
-import baseball.game.NumberMatcher;
-import baseball.game.PositionMatcher;
+import baseball.matcher.NumberMatcher;
+import baseball.matcher.PositionMatcher;
 import baseball.config.Constants;
 import java.util.List;
 

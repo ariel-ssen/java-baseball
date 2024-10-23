@@ -16,41 +16,41 @@ public class StrikeCheckerTest {
     private List<Integer> answer;
 
     @BeforeEach
-    @DisplayName("테스트 전에 StrikeChecker와 정답 리스트를 초기화")
+    @DisplayName("StrikeChecker랑 정답 리스트 초기화함")
     public void setUp() {
         strikeChecker = new StrikeChecker();
-        answer = Arrays.asList(1, 2, 3); // 정답은 1, 2, 3
+        answer = Arrays.asList(1, 2, 3);
     }
 
     @Test
-    @DisplayName("스트라이크가 없는 경우: 예상한 숫자가 정답과 일치하지 않는 경우")
+    @DisplayName("스트라이크 없음: 예상한 숫자가 정답이랑 안 맞을 때")
     public void testNoStrikes() {
-        List<Integer> guess = Arrays.asList(4, 5, 6); // 정답과 다른 숫자
+        List<Integer> guess = Arrays.asList(4, 5, 6);
         int strikes = strikeChecker.countStrikes(guess, answer);
-        assertEquals(Constants.ZERO, strikes, "스트라이크가 없어야 합니다.");
+        assertEquals(Constants.ZERO, strikes, "스트라이크 없음.");
     }
 
     @Test
-    @DisplayName("한 개의 스트라이크가 있는 경우: 하나의 숫자와 위치가 일치하는 경우")
+    @DisplayName("1개 스트라이크: 하나 맞고 위치도 맞을 때")
     public void testOneStrike() {
-        List<Integer> guess = Arrays.asList(1, 5, 6); // 첫 번째 숫자 1만 일치
+        List<Integer> guess = Arrays.asList(1, 5, 6);
         int strikes = strikeChecker.countStrikes(guess, answer);
-        assertEquals(1, strikes, "1개의 스트라이크가 있어야 합니다.");
+        assertEquals(1, strikes, "1개의 스트라이크임.");
     }
 
     @Test
-    @DisplayName("두 개의 스트라이크가 있는 경우: 두 개의 숫자와 위치가 일치하는 경우")
+    @DisplayName("2개 스트라이크: 두 개 맞고 위치도 맞을 때")
     public void testTwoStrikes() {
-        List<Integer> guess = Arrays.asList(1, 2, 6); // 첫 번째와 두 번째 숫자가 일치
+        List<Integer> guess = Arrays.asList(1, 2, 6);
         int strikes = strikeChecker.countStrikes(guess, answer);
-        assertEquals(2, strikes, "2개의 스트라이크가 있어야 합니다.");
+        assertEquals(2, strikes, "2개의 스트라이크임.");
     }
 
     @Test
-    @DisplayName("세 개의 스트라이크가 있는 경우: 모든 숫자와 위치가 일치하는 경우")
+    @DisplayName("3개 스트라이크: 전부 다 맞을 때")
     public void testThreeStrikes() {
-        List<Integer> guess = Arrays.asList(1, 2, 3); // 모두 일치
+        List<Integer> guess = Arrays.asList(1, 2, 3);
         int strikes = strikeChecker.countStrikes(guess, answer);
-        assertEquals(3, strikes, "3개의 스트라이크가 있어야 합니다.");
+        assertEquals(3, strikes, "3개의 스트라이크임.");
     }
 }
