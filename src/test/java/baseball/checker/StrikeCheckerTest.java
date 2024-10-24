@@ -51,6 +51,6 @@ public class StrikeCheckerTest {
     public void testThreeStrikes() {
         List<Integer> guess = Arrays.asList(1, 2, 3);
         int strikes = strikeChecker.countStrikes(guess, answer);
-        assertEquals(3, strikes, "3개의 스트라이크임.");
+        assertEquals(3, strikes, "3개의 스트라이크임 .");
     }
 }
